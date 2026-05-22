@@ -28,6 +28,7 @@ text: {input_text}
 
 BELOW IS AN EXAMPLE ON HOW THE OUTPUT SHOULD LOOK LIKE
 
+
 text: Python is used for AI and Tensorflow is used in AI
 {{
   "concepts": [
@@ -50,11 +51,17 @@ text: Python is used for AI and Tensorflow is used in AI
 }}
 """
 
-user_text = "LangChain is used for LLM applications and OpenAI developed GPT models."
+def generate_prompt(user_text):
+  prompt = prompt_template.format(input_text=user_text)
+  return prompt
 
-prompt = prompt_template.format(input_text=user_text)
-response = client.models.generate_content(
-    model="gemini-2.5-flash",
-    contents=prompt,
-)
-print(response.text)
+def extractor(prompt):
+  response = client.models.generate_content(
+      model="gemini-2.5-flash",
+      contents=prompt,
+  )
+  return response
+
+if __name__ == "__main__":
+  user_text = "LangChain is used for LLM applications and OpenAI developed GPT models."
+  print(type(extractor(generate_prompt(user_text)).text))
