@@ -52,3 +52,15 @@ cover/
 *.swp
 *.swo
 test.py
+
+.venv/
+__pycache__/
+*.pyc
+
+dist/
+build/
+*.egg-info/
+
+graph.json
+
+.env

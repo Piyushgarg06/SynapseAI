@@ -1,112 +1,211 @@
-# 🧠 Synapse — Personal Knowledge Graph (PKG)
+# 🧠 Synapse
 
-## 🚀 Overview
+> Transform natural language into a persistent knowledge graph.
 
-Synapse is a system that converts unstructured text into a structured knowledge graph.
+Synapse is a Python library that converts unstructured text into a structured knowledge graph by extracting concepts and relationships from natural language.
 
-Instead of storing information as raw text (which is hard to query and reason about), Synapse extracts **concepts** and **relationships between them**, and represents them as a graph-like dictionary.
-
-This allows information to be:
-- Structured  
-- Queryable  
-- Extendable for reasoning systems  
+Instead of storing information as raw text, Synapse organizes information into a graph structure that can be queried, traversed, and extended for building intelligent systems and memory systems.
 
 ---
 
-## 🎯 V1 — Core System (Current Focus)
+## ✨ Features
 
-**Goal:** Build a minimal, local-first knowledge graph system from text.
-
-### What it does:
-- Takes **text input**
-- Extracts:
-  - Concepts  
-  - Relationships between concepts  
-- Stores them in a **graph structure (dictionary)**  
-
-### Example
-
-**Input:**
-
-Python is a programming language
-
-
-**Output (conceptually):**
-
-Python → is → programming language
-
+- Natural language → structured relationships
+- Persistent graph storage
+- Duplicate prevention
+- Case-insensitive querying
+- Multi-hop relationship traversal
+- Local-first architecture
+- Provider-agnostic design
+- Extensible memory engine
 
 ---
 
-## 🧠 Why this matters
+## 📦 Installation
 
-Raw text is:
-- Unstructured  
-- Hard to query  
-- Difficult to reason over  
-
-A knowledge graph enables:
-- Clear relationships  
-- Better retrieval  
-- Foundation for intelligent systems  
-
----
-
-## 🏗️ Project Structure (V1)
-
+```bash
+pip install synapse-ai
 ```
+
+---
+
+## ⚡ Quick Start
+
+```python
+from synapse import Synapse
+
+brain = Synapse()
+
+brain.add(
+    "CEO of Apple met Microsoft executives in Seattle."
+)
+
+brain.save()
+
+print(
+    brain.get_relations("Apple")
+)
+
+print(
+    brain.get_indirect_relations("CEO of Apple")
+)
+```
+
+---
+
+## Example
+
+### Input
+
+```text
+Python is used for AI and TensorFlow is used in AI.
+```
+
+### Extracted Graph
+
+```python
+{
+    "python": [
+        ("used_for", "ai")
+    ],
+    "tensorflow": [
+        ("used_in", "ai")
+    ]
+}
+```
+
+---
+
+## Project Structure
+
+```text
 synapse/
-├── graph.py # Graph creation + relationship handling
-├── main.py # Entry point for testing
-└── README.md # Project documentation
+├── __init__.py
+├── synapse.py
+├── graph.py
+├── query.py
+├── processor.py
+├── extractor.py
+├── persistence.py
+└── utils.py
 ```
----
-
-## 🔮 Future Roadmap
-
-### V2 — Smarter Ingestion
-- Add **PDF + document ingestion**
-- Improve extraction quality  
-- Better graph reasoning  
-
-### V3 — Chat Interface (RAG System)
-- Build a **chat system on top of the graph**
-- Combine:
-  - Knowledge graph  
-  - LLM reasoning  
-- Enable contextual Q&A  
-
-### V4 — Local Intelligence
-- Run **local LLMs**
-- Enable:
-  - Offline usage  
-  - Export / import knowledge graphs  
-- Turn Synapse into a personal AI memory system  
 
 ---
 
 ## ⚙️ Design Principles
 
-- Simplicity over complexity  
-- Local-first system  
-- Incremental development  
-- No overengineering  
+- Simplicity over complexity
+- Local-first architecture
+- Incremental development
+- Extensibility
+- No overengineering
 
 ---
 
-## 📌 Status
+## 📌 Current Status
 
-🚧 Currently building V1 — core graph system  
+### ✅ V1 Complete
+
+Implemented features:
+
+- Text ingestion
+- Relationship extraction
+- Graph construction
+- Graph persistence
+- Query system
+- Multi-hop traversal
+- Python package support
+- Provider-agnostic extractor architecture
+
+---
+
+# 🗺️ Roadmap
+
+## V2 — Conversational Memory Layer
+
+Build a conversational interface on top of the graph.
+
+Planned capabilities:
+
+- Memory-backed conversations
+- Graph-aware retrieval
+- Contextual question answering
+- Better reasoning over stored knowledge
+- Persistent long-term memory
+
+---
+
+## V3 — Agentic Knowledge Graph
+
+Integrate coding agents and sandboxed environments.
+
+Planned capabilities:
+
+- Claude Code integration
+- Codex integration
+- Live graph construction during conversations
+- Automatic graph updates
+- Multi-session memory
+- Knowledge graph visualization
+
+---
+
+## V4 — Portable Intelligence
+
+Turn Synapse into a transferable memory engine.
+
+Planned capabilities:
+
+- Import knowledge graphs
+- Export knowledge graphs
+- Transfer memory between LLMs
+- Local execution
+- Offline mode
+- Personal AI memory system
+
+Example:
+
+```text
+Claude
+    ↓
+Knowledge Graph
+    ↓
+Export
+    ↓
+GPT
+    ↓
+Continue with the same memory
+```
+
+---
+
+## 🚀 Vision
+
+Modern AI systems own the intelligence, but they also own the memory.
+
+Synapse aims to separate the two.
+
+The long-term goal is to make memory portable, persistent, and independent of any single model provider.
+
+Memory should belong to the user, not the model.
 
 ---
 
 ## 🧑‍💻 Author
 
-**Piyush Garg**
+### Piyush Garg
 
-AI/ML enthusiast building systems at the intersection of:
-- Machine Learning  
-- Knowledge Graphs  
-- Intelligent Systems  
+AI/ML enthusiast interested in:
 
-Focused on building scalable, real-world projects.
+- Knowledge Graphs
+- LLM Systems
+- Intelligent Agents
+- Machine Learning Infrastructure
+
+Building systems at the intersection of memory and intelligence.
+
+---
+
+## 📄 License
+
+MIT License

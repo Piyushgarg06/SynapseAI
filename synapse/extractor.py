@@ -1,8 +1,12 @@
-from dotenv import load_dotenv
 import os
 from google import genai
 
-load_dotenv()
+api_key = os.getenv("GEMINI_API_KEY")
+if api_key is None:
+    raise ValueError(
+        "GEMINI_API_KEY environment variable not found."
+    )
+genai.configure(api_key=api_key)    
 client = genai.Client()
 
 prompt_template = """you are an information extractor system whose work is to extract information in 
@@ -61,7 +65,3 @@ def extractor(prompt):
       contents=prompt,
   )
   return response
-
-if __name__ == "__main__":
-  user_text = "LangChain is used for LLM applications and OpenAI developed GPT models."
-  print(type(extractor(generate_prompt(user_text)).text))
