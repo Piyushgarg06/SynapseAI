@@ -280,28 +280,93 @@ def preprocess_readme_diff(file_diff: str) -> str:
     """
     Remove documentation sections that are not durable repository knowledge.
     """
-
     ignored_sections = [
         "# Installation",
         "## Installation",
+
         "# Quick Start",
         "## Quick Start",
+
+        "# Getting Started",
+        "## Getting Started",
+
+        "# Setup",
+        "## Setup",
+
+        "# Requirements",
+        "## Requirements",
+
+        "# Prerequisites",
+        "## Prerequisites",
+
         "# Usage",
         "## Usage",
+
         "# Example",
         "## Example",
+
         "# Examples",
         "## Examples",
-        "# Author",
-        "## Author",
-        "# License",
-        "## License",
-        "# Contributing",
-        "## Contributing",
-        "# Roadmap",
-        "## Roadmap",
+
+        "# Demo",
+        "## Demo",
+
+        "# Screenshots",
+        "## Screenshots",
+
+        "# Benchmark",
+        "## Benchmark",
+
+        "# Benchmarks",
+        "## Benchmarks",
+
+        "# Performance",
+        "## Performance",
+
+        "# Testing",
+        "## Testing",
+
+        "# Troubleshooting",
+        "## Troubleshooting",
+
         "# FAQ",
         "## FAQ",
+
+        "# Changelog",
+        "## Changelog",
+
+        "# Release Notes",
+        "## Release Notes",
+
+        "# Version History",
+        "## Version History",
+
+        "# Contributing",
+        "## Contributing",
+
+        "# Authors",
+        "## Authors",
+
+        "# Author",
+        "## Author",
+
+        "# Credits",
+        "## Credits",
+
+        "# Acknowledgements",
+        "## Acknowledgements",
+
+        "# Citation",
+        "## Citation",
+
+        "# License",
+        "## License",
+
+        "# Contact",
+        "## Contact",
+
+        "# Support",
+        "## Support"
     ]
 
     lines = file_diff.splitlines()

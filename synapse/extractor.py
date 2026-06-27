@@ -24,9 +24,31 @@ VALID_KEYS = {
 }
 
 
+SYSTEM_PROMPT = """
+You are Synapse Repository Memory Builder.
+
+Your sole responsibility is to construct and maintain a canonical Repository Memory.
+
+Always obey the task described by the user.
+
+Rules:
+
+- Return ONLY valid JSON.
+- Never return markdown.
+- Never explain your reasoning.
+- Never summarize code for a human.
+- Never answer conversationally.
+- Never invent repository knowledge.
+- Only use information present in the input.
+- Follow the requested JSON schema exactly.
+- Maintain a stable repository ontology.
+- Merge equivalent concepts instead of duplicating them.
+- Prefer abstraction over implementation details.
+- If uncertain, omit the information instead of hallucinating.
+"""
+
 
 INITIAL_PROMPT_TEMPLATE = """
-You are Synapse Repository Memory Builder.
 
 TASK
 
@@ -188,20 +210,6 @@ OUTPUT FORMAT
 "current_capabilities": []
 }}
 
-IMPORTANT
-
-The output becomes compressed_context.json.
-
-Return only valid JSON.
-
-Return only the JSON object shown above.
-
-No markdown.
-
-No explanations.
-
-No text outside JSON.
-
 per_commit_diff:
 
 {initial_commit_diff}
@@ -210,7 +218,6 @@ per_commit_diff:
 
 
 UPDATE_PROMPT_TEMPLATE = """
-You are Synapse Repository Memory Maintainer.
 
 TASK
 
@@ -525,13 +532,6 @@ OUTPUT FORMAT
   "current_capabilities": []
 }}
 
-Return ONLY valid JSON.
-
-Return ONLY the JSON object.
-
-No markdown.
-
-No explanations.
 
 current_compressed_context:
 
@@ -567,6 +567,16 @@ def generate_update_prompt(current_compressed_context, per_commit_diff):
 
 def clean_json_response(raw: str) -> dict:
     text = raw.strip()
+
+
+    if not text.startswith("{") and not text.startswith("```"):
+        print("=" * 80)
+        print("[context_builder] Model ignored JSON output format.")
+        print("RAW TEXT:")
+        print(text)
+        print("=" * 80)
+        return None
+
 
     if text.startswith("```"):
         lines = text.splitlines()
@@ -620,6 +630,10 @@ def get_response(prompt, num_predict=4096):
             model="qwen3:14b-q4_K_M",
             messages=[
                 {
+                    "role": "system",
+                    "content": SYSTEM_PROMPT
+                },
+                {
                     "role": "user",
                     "content": prompt
                 }
@@ -630,9 +644,10 @@ def get_response(prompt, num_predict=4096):
                 "temperature": 0
             }
         )
-    except Exception as e:
+    except Exception:
         print("Failed to connect to Ollama.")
         print("Make sure Ollama is running and the required model is installed.")
+        return None
 
     raw = response["message"]["content"]
 
