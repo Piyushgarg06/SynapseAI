@@ -1,25 +1,26 @@
-import json
-from .extractor import generate_prompt
+from .git_manager import get_repository_changes, get_repository_context
+from .persistence import load_metadata, save_context, load_context
 
-def process_text(user_text:str,extractor):
 
-    """
-    Extract structured relationships from text using an LLM.
-    """
+def build_repository_context():
+    metadata = load_metadata()
 
-    prompt = generate_prompt(user_text)
-    raw_response = extractor(prompt)
-    cleaned_text = (
-        raw_response.text
-        .replace("```json", "")
-        .replace("```", "")
-        .strip()
-    )
-    try:
-        parsed_response = json.loads(cleaned_text)
-        return parsed_response
-    except json.JSONDecodeError:
-        return {
-            "concepts":[],
-            "relationships":[]
-        }
+    repo_changes = get_repository_changes(metadata)
+    if not repo_changes:
+        return
+    new_context = get_repository_context(repo_changes)
+    existing_context = load_context()
+    if not existing_context:
+        save_context(new_context)
+        return
+    existing_sha = {
+        item["sha"]
+        for item in existing_context["data"]
+    }
+    for item in new_context["data"]:
+        if item["sha"] not in existing_sha:
+            existing_context["data"].append(item)
+
+    save_context(existing_context)
+
+    print("Successfully initialized repository context.")

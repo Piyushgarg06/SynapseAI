@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "synapse-pkg"
-version = "0.1.1"
+version = "2.0.0a1"
 description = "Knowledge graph extraction library powered by LLMs"
 readme = "README.md"
 requires-python = ">=3.10"
@@ -13,6 +13,10 @@ authors = [
     { name = "Piyush Garg" }
 ]
 
-dependencies = [    
-    "google-generativeai",
-    ]
+dependencies = [
+    "GitPython>=3.1.40",
+    "ollama>=0.5.0"
+]
+
+[project.scripts]
+synapse = "synapse.cli:main"
