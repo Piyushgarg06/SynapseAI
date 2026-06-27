@@ -37,11 +37,17 @@ def processing_strategy(left_boundary):
             left_boundary,
             "HEAD"
         ).splitlines():
-
             a, d, _ = lines.split("\t")
 
-            added += int(a)
-            deleted += int(d)
+            try:
+                added += int(a)
+            except ValueError:
+                pass
+
+            try:
+                deleted += int(d)
+            except ValueError:
+                pass
 
         lines_changed = added + deleted
 
