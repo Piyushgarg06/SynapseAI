@@ -1,5 +1,5 @@
 import git
-from .persistence import load_compressed_context, save_compressed_context, load_metadata, save_metadata
+from .persistence import load_compressed_context, save_compressed_context, load_metadata, save_metadata, load_config
 from .git_manager import (
     get_repository_changes,
     split_commit_by_file
@@ -8,6 +8,8 @@ from ollama import chat
 import json
 
 repo = git.Repo(search_parent_directories=True)
+
+config = load_config()
 
 
 MAX_PROMPT_SIZE = 30000
@@ -625,9 +627,16 @@ def clean_json_response(raw: str) -> dict:
 
 def get_response(prompt, num_predict=4096):
 
+    if config["model"]:
+        model = config["model"]
+    else:
+        print("no model configured.")
+        print("Run 'synapse setup' first.")
+        return 
+
     try:
         response = chat(
-            model="qwen3:14b-q4_K_M",
+            model=model,
             messages=[
                 {
                     "role": "system",

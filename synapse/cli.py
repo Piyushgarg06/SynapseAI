@@ -1,5 +1,4 @@
 import sys
-
 from . import commands
 
 
@@ -11,6 +10,7 @@ def main():
         print("Available commands:")
         print("  init")
         print("  knowledge")
+        print("  setup")
         return
 
     command = sys.argv[1].lower()
@@ -20,6 +20,9 @@ def main():
 
     elif command == "knowledge":
         commands.knowledge()
+    
+    elif command == "setup":
+        commands.setup()
 
     else:
         print(f"Unknown command: {command}")

@@ -112,6 +112,12 @@ This creates the `.synapse/` directory containing:
 └── config.json
 ```
 
+Set up and select the local Ollama model:
+
+```bash
+synapse setup
+```
+
 Build the initial Repository Context and Repository Memory:
 
 ```bash
