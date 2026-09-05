@@ -1,3 +1,7 @@
+> 🚧 **Synapse V3 is currently in development**
+>
+> Synapse is undergoing a major architectural redesign for v3.
+> This repository currently contains the stable **V2 implementation** while V3 is being designed and developed separately.
 
 # Synapse V2
 
